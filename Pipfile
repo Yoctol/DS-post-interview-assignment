@@ -4,10 +4,10 @@ name = "pypi"
 url = "https://pypi.org/simple"
 
 [packages]
-pytest = "*"
-tensorflow = "*"
+tensorflow = "<=1.10"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.6"
