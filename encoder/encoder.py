@@ -4,7 +4,8 @@ _SCOPE_NAME = "Encoder"
 
 
 class Encoder:
-    def __init__(self):
+    def __init__(self, input_dim: int):
+        self.input_dim = input_dim
         self.graph = tf.Graph()
         with self.graph.as_default(), tf.variable_scope(_SCOPE_NAME):
             self.build_graph()
@@ -21,6 +22,11 @@ class Encoder:
     def encode(self, X):
         # TODO
         pass
+
+    def validate_data(self, data):
+        x = data[0] if isinstance(data, tuple) else data
+        if x.shape[1] != self.input_dim:
+            raise RuntimeError()
 
     @classmethod
     def load(self, path):
