@@ -29,7 +29,7 @@ class SupervisedTask(Task):
         if len(x.shape) != 2:
             raise ValueError("Input data should be rank 2!")
         if x.shape[0] != y.shape[0]:
-            raise ValueError("Data pairs should have same length!")
+            raise ValueError("Data pairs should have the same length!")
         if len(y.shape) != 2:
             raise ValueError("Output data should be rank 2!")
         if y.shape[1] != self.output_dim:
