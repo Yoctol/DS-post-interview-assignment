@@ -25,8 +25,10 @@ class Encoder:
 
     def validate_data(self, data):
         x = data[0] if isinstance(data, tuple) else data
+        if len(x.shape) != 2:
+            raise RuntimeError("Input data should be rank 2!")
         if x.shape[1] != self.input_dim:
-            raise RuntimeError()
+            raise RuntimeError(f"Invalid input data dimension: {x.shape[1]} != {self.input_dim}!")
 
     @classmethod
     def load(self, path):
