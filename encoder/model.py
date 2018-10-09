@@ -1,7 +1,13 @@
+import numpy as np
 import tensorflow as tf
 
 from .task import Task
-from .types import MultiSupervisedData, MultiUnsupervisedData
+from .types import (
+    Data,
+    MultiSupervisedData,
+    MultiUnsupervisedData,
+    MultiTaskData,
+)
 
 
 class MultiTaskModel:
@@ -26,17 +32,20 @@ class MultiTaskModel:
         ):
         if not supervised_data and not unsupervised_data:
             raise RuntimeError()
-        self._validate_data(supervised_data)
-        self._validate_data(unsupervised_data)
+        self._validate_multi_task_data(supervised_data)
+        self._validate_multi_task_data(unsupervised_data)
         # TODO
 
-    def _validate_data(self, multi_task_data):
+    def _validate_multi_task_data(self, multi_task_data: MultiTaskData):
         for task, data in multi_task_data.items():
-            if task not in self._task:
-                raise KeyError(f"Unregistered task: {task}.")
-            self.encoder.validate_data(data)
-            task.validate_data(data)
+            self._validate_data(task, data)
 
-    def evaluate(self):
+    def _validate_data(self, task: Task, data: Data):
+        if task not in self._task:
+            raise KeyError(f"Unregistered task: {task}.")
+        self.encoder.validate_data(data)
+        task.validate_data(data)
+
+    def evaluate(self, task: Task, data: Data) -> np.ndarray:
+        self._validate_data(task, data)
         # TODO
-        pass

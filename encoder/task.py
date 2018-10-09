@@ -1,12 +1,10 @@
 import abc
 
-import numpy as np
-
-from .types import SupervisedData
+from .types import SupervisedData, UnsupervisedData
 
 
 class Task(abc.ABC):
-    def __init__(self, name, output_dim):
+    def __init__(self, name: str, output_dim: int):
         self.name = name
         self.output_dim = output_dim
 
@@ -49,7 +47,7 @@ class MultiClsTask(SupervisedTask):
 
 
 class UnsupervisedTask(Task):
-    def validate_data(self, data: np.ndarray):
+    def validate_data(self, data: UnsupervisedData):
         if len(data.shape) != 2:
             raise ValueError("Output data should be rank 2!")
         if data.shape[1] != self.output_dim:

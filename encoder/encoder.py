@@ -1,6 +1,8 @@
 import numpy as np
 import tensorflow as tf
 
+from .types import Data
+
 _SCOPE_NAME = "Encoder"
 
 
@@ -28,7 +30,7 @@ class Encoder:
         self.validate_data(X)
         # TODO
 
-    def validate_data(self, data):
+    def validate_data(self, data: Data):
         x = data[0] if isinstance(data, tuple) else data
         if len(x.shape) != 2:
             raise ValueError("Input data should be rank 2!")
@@ -36,9 +38,9 @@ class Encoder:
             raise ValueError(f"Invalid input data dimension: {x.shape[1]} != {self.input_dim}!")
 
     @classmethod
-    def load(self, path):
+    def load(self, path: str):
         # TODO
         pass
 
-    def save(self, path):
+    def save(self, path: str):
         self.saver.save(self.sess, path)
