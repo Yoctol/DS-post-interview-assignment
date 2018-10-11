@@ -1,5 +1,7 @@
 import abc
 
+import tensorflow as tf
+
 from .types import SupervisedData, UnsupervisedData
 
 
@@ -8,8 +10,21 @@ class Task(abc.ABC):
         self.name = name
         self.output_dim = output_dim
 
+    def build_graph(self, encoder):
+        graph = encoder.graph
+        with graph.as_default(), tf.variable_scope(self.name) as vs:
+            self._build_graph(encoder)
+            encoder.sess.run(
+                tf.variables_initializer(
+                    var_list=graph.get_collection(
+                        tf.GraphKeys.GLOBAL_VARIABLES,
+                        scope=vs.name,
+                    ),
+                )
+            )
+
     @abc.abstractmethod
-    def build_graph(self):
+    def _build_graph(self, encoder):
         pass
 
     @abc.abstractmethod
@@ -41,7 +56,7 @@ class BinaryClsTask(SupervisedTask):
     def __init__(self, name: str, n_labels: int):
         super().__init__(name=name, output_dim=n_labels)
 
-    def build_graph(self, *args, **kwargs):
+    def _build_graph(self, encoder):
         pass
 
 
@@ -51,7 +66,7 @@ class MultiClsTask(SupervisedTask):
         super().__init__(name=name, output_dim=1)
         self.n_classes = n_classes
 
-    def build_graph(self, *args, **kwargs):
+    def _build_graph(self, encoder):
         pass
 
 
@@ -65,5 +80,6 @@ class UnsupervisedTask(Task):
 
 
 class AutoEncoderTask(UnsupervisedTask):
-    def build_graph(self, *args, **kwargs):
+
+    def _build_graph(self, encoder):
         pass

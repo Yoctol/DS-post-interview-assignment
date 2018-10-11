@@ -21,6 +21,14 @@ class Encoder:
             var_list=self.graph.get_collection(
                 tf.GraphKeys.GLOBAL_VARIABLES, scope=_SCOPE_NAME),
         )
+        self.sess.run(
+            tf.variables_initializer(
+                var_list=self.graph.get_collection(
+                    tf.GraphKeys.GLOBAL_VARIABLES,
+                    scope=_SCOPE_NAME,
+                ),
+            )
+        )
 
     def _build_graph(self):
         # TODO

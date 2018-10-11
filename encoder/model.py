@@ -1,7 +1,6 @@
 from typing import Dict, Union
 
 import numpy as np
-import tensorflow as tf
 
 from .task import Task, SupervisedTask, UnsupervisedTask
 from .types import (
@@ -21,15 +20,13 @@ class MultiTaskModel:
         self.encoder = encoder
         self._task = set()
         self.graph = encoder.graph
+        self.sess = encoder.sess
 
     def add_task(self, task: Task):
         if task in self._task:
             raise RuntimeError("Task already exists!")
         self._task.add(task)
-        with tf.variable_scope(task.name), self.graph.as_default():
-            # TODO
-            # Please feel free to define the arguments of build_graph
-            task.build_graph()
+        task.build_graph(self.encoder)
 
     def fit(
             self,
