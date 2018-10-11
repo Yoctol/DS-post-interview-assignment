@@ -43,4 +43,6 @@ class Encoder:
         pass
 
     def save(self, path: str):
+        # TODO
+        # save hyper parameters as well (if they exist.)
         self.saver.save(self.sess, path)
