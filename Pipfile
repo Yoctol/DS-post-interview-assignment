@@ -7,7 +7,7 @@ url = "https://pypi.org/simple"
 tensorflow = "<=1.10"
 
 [dev-packages]
-pytest = "*"
+pytest = "==3.7.3"
 
 [requires]
-python_version = "3.6"
+python_version = "3.6.5"
