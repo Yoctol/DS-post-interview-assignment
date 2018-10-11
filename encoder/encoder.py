@@ -38,7 +38,7 @@ class Encoder:
             raise ValueError(f"Invalid input data dimension: {x.shape[1]} != {self.input_dim}!")
 
     @classmethod
-    def load(self, path: str):
+    def load(cls, path: str):
         # TODO
         pass
 
