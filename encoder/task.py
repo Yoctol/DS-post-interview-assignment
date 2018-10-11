@@ -37,11 +37,20 @@ class SupervisedTask(Task):
 
 
 class BinaryClsTask(SupervisedTask):
+
+    def __init__(self, name: str, n_labels: int):
+        super().__init__(name=name, output_dim=n_labels)
+
     def build_graph(self, *args, **kwargs):
         pass
 
 
 class MultiClsTask(SupervisedTask):
+
+    def __init__(self, name: str, n_classes: int):
+        super().__init__(name=name, output_dim=1)
+        self.n_classes = n_classes
+
     def build_graph(self, *args, **kwargs):
         pass
 
