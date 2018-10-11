@@ -1,13 +1,15 @@
+from typing import Dict, Union
+
 import numpy as np
 import tensorflow as tf
 
-from .task import Task
-from .types import (
-    Data,
-    MultiSupervisedData,
-    MultiUnsupervisedData,
-    MultiTaskData,
-)
+from .task import Task, SupervisedTask, UnsupervisedTask
+from .types import Data, SupervisedData, UnsupervisedData
+
+
+MultiSupervisedData = Dict[SupervisedTask, SupervisedData]
+MultiUnsupervisedData = Dict[UnsupervisedTask, UnsupervisedData]
+MultiTaskData = Union[MultiSupervisedData, MultiUnsupervisedData]
 
 
 class MultiTaskModel:
