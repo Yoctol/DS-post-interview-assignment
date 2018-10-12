@@ -10,6 +10,8 @@
 
 ## 如何開始
 
+0. 請 fork 此 repository
+
 1. 安裝開發環境
 
     1. 安裝 [pipenv](https://github.com/pypa/pipenv)
