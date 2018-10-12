@@ -51,22 +51,28 @@ class SupervisedTask(Task):
             raise ValueError(f"Invalid output data dimension: {y.shape[1]} != {self.output_dim}!")
 
 
-class BinaryClsTask(SupervisedTask):
+class MultiLabelTask(SupervisedTask):
 
     def __init__(self, name: str, n_labels: int):
         super().__init__(name=name, output_dim=n_labels)
 
+    @property
+    def n_labels(self):
+        return self.output_dim
+
     def _build_graph(self, encoder):
+        # TODO
         pass
 
 
-class MultiClsTask(SupervisedTask):
+class MultiClassTask(SupervisedTask):
 
     def __init__(self, name: str, n_classes: int):
         super().__init__(name=name, output_dim=1)
         self.n_classes = n_classes
 
     def _build_graph(self, encoder):
+        # TODO
         pass
 
 
@@ -82,4 +88,5 @@ class UnsupervisedTask(Task):
 class AutoEncoderTask(UnsupervisedTask):
 
     def _build_graph(self, encoder):
+        # TODO
         pass
