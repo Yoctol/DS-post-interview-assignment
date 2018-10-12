@@ -25,7 +25,7 @@ class TestMultiTaskEncoder:
     input_dim = 200
     latent_dim = 20
 
-    @pytest.fixture(scope="module")
+    @pytest.fixture(scope="class")
     def multi_task_model(self):
         encoder = Encoder(
             input_dim=self.input_dim,
@@ -33,7 +33,7 @@ class TestMultiTaskEncoder:
         )
         return MultiTaskModel(encoder=encoder)
 
-    @pytest.fixture(scope="module")
+    @pytest.fixture(scope="class")
     def supervised_tasks_and_data(self):
         mlt = MultiLabelTask('multi_label_test', 5)
         mct = MultiClassTask('multi_class_test', 10)
@@ -49,15 +49,15 @@ class TestMultiTaskEncoder:
             mct: mct_data,
         }
 
-    @pytest.fixture(scope="module")
+    @pytest.fixture(scope="class")
     def unsupervised_tasks_and_data(self):
         x = np.random.randn(100, self.input_dim)
         aet = AutoEncoderTask('auto_encoder_test', self.input_dim)
         aet_data = x
         return {aet: aet_data}
 
-    @pytest.fixture(scope="module")
-    def tasks_and_data(supervised_tasks_and_data, unsupervised_tasks_and_data):
+    @pytest.fixture(scope="class")
+    def tasks_and_data(self, supervised_tasks_and_data, unsupervised_tasks_and_data):
         tasks = supervised_tasks_and_data.copy()
         tasks.update(unsupervised_tasks_and_data)
         return tasks
@@ -76,7 +76,8 @@ class TestMultiTaskEncoder:
     def evaluate_on_tasks(self, multi_task_model, tasks_and_data):
         return [
             multi_task_model.evaluate(task, data)
-            for task, data in tasks_and_data]
+            for task, data in tasks_and_data.items()
+        ]
 
     def test_fit(
             self,
@@ -91,7 +92,10 @@ class TestMultiTaskEncoder:
             unsupervised_data=unsupervised_tasks_and_data,
         )
         new_losses = self.evaluate_on_tasks(multi_task_model, tasks_and_data)
-        assert all(new_losses < original_losses)
+        assert all([
+            new_loss < original_loss
+            for new_loss, original_loss in zip(new_losses, original_losses)
+        ])
 
     def test_encoder_encode(self, multi_task_model):
         encoder = multi_task_model.encoder
