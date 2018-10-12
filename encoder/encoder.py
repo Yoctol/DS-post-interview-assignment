@@ -8,6 +8,12 @@ _SCOPE_NAME = "Encoder"
 
 class Encoder:
     def __init__(self, input_dim: int, output_dim: int):
+        # TODO
+        # This object should support additional model config or hyperparameters
+        # with default value.
+
+        # You can develope your own design. (without breaking the interface.)
+
         self.input_dim = input_dim
         self.output_dim = output_dim
         self._set_up()
@@ -43,7 +49,7 @@ class Encoder:
     def encode(self, X: np.ndarray) -> np.ndarray:
         self.validate_data(X)
         # TODO
-        # return the encoded vector of X,
+        # Return the encoded vector of X,
         # should be np.array of shape (N, self.output_dim).
 
     def validate_data(self, data: Data):
@@ -56,7 +62,7 @@ class Encoder:
     @classmethod
     def load(cls, path: str) -> object:
         # TODO
-        # restore the Encoder object
+        # Restore the Encoder object
         # from given file path which has been passed to save already.
 
         # Hint: make use of tf.train.Saver
@@ -65,7 +71,7 @@ class Encoder:
 
     def save(self, path: str):
         # TODO
-        # save the variables and hyperparameters of Encoder to given path.
+        # Save the variables and hyperparameters of Encoder to given path.
 
         # Hint: make use of tf.train.Saver
 
