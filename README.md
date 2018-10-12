@@ -6,7 +6,7 @@
 
 實作一個 Encoder ，能利用多種 Tasks 訓練，並支援 Save / Load 功能。
 
-為了簡化，本實作中的 Data 皆為一維 (不考慮batch_size.)
+為了簡化，本實作中的 Data 皆為一維 (不考慮 batch_size )。
 
 ---
 
@@ -17,7 +17,7 @@
 1. 安裝開發環境
 
     1. 安裝 [pipenv](https://github.com/pypa/pipenv)
-    2. 使用pipenv安裝必要套件：
+    2. 使用 pipenv 安裝必要套件：
     ```
     $ pipenv --three
     ```
