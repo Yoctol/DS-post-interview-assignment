@@ -10,9 +10,9 @@ class Encoder:
     def __init__(self, input_dim: int, output_dim: int):
         # TODO
         # This object should support additional model config or hyperparameters
-        # with default value.
+        # with default values.
 
-        # You can develope your own design. (without breaking the interface.)
+        # You can develop your own design. (without breaking the interface.)
 
         self.input_dim = input_dim
         self.output_dim = output_dim

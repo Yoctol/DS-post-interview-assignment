@@ -19,9 +19,9 @@ class MultiTaskModel:
     def __init__(self, encoder):
         # [Optional TODO]
         # This object can support additional model config or hyperparameters
-        # with default value.
+        # with default values.
 
-        # You can develope your own design. (without breaking the interface.)
+        # You can develop your own design. (without breaking the interface.)
 
         self.encoder = encoder
         self._task = set()

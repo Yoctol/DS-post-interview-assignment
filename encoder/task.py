@@ -9,9 +9,9 @@ class Task(abc.ABC):
     def __init__(self, name: str, output_dim: int):
         # TODO
         # This object should support additional model config or hyperparameters
-        # with default value.
+        # with default values.
 
-        # You can develope your own design. (without breaking the interface.)
+        # You can develop your own design. (without breaking the interface.)
 
         self.name = name
         self.output_dim = output_dim
