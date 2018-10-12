@@ -15,30 +15,30 @@
     1. 安裝 [pipenv](https://github.com/pypa/pipenv)
     2. 使用pipenv安裝必要套件：
     ```
-    pipenv --three
+    $ pipenv --three
     ```
 
     ```
-    pipenv install --dev
+    $ pipenv install --dev
     ```
 
     3. 進入虛擬環境：
     ```
-    pipenv shell
+    $ pipenv shell
     ```
 
     4. 若需要額外安裝套件
     ```
-    pipenv install <package_name>
+    $ pipenv install <package_name>
     ```
     請務必確認有成功產生新的Pipfile.lock檔案。
 
 2. 執行測試
 
     ```
-    pytest
+    $ pytest
     ```
-    此時會發現測試不會通過。
+    此時應會發現測試不會通過。
 
 3. 實作
 
