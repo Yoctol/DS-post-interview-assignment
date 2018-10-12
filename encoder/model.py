@@ -17,6 +17,12 @@ MultiTaskData = Union[MultiSupervisedData, MultiUnsupervisedData]
 
 class MultiTaskModel:
     def __init__(self, encoder):
+        # [Optional TODO]
+        # This object can support additional model config or hyperparameters
+        # with default values.
+
+        # You can develop your own design. (without breaking the interface.)
+
         self.encoder = encoder
         self._task = set()
         self.graph = encoder.graph
@@ -26,7 +32,7 @@ class MultiTaskModel:
         if task in self._task:
             raise RuntimeError("Task already exists!")
         self._task.add(task)
-        task.build_graph(self.encoder)
+        task.extend_encoder_graph(self.encoder)
 
     def fit(
             self,
@@ -38,6 +44,7 @@ class MultiTaskModel:
         self._validate_multi_task_data(supervised_data)
         self._validate_multi_task_data(unsupervised_data)
         # TODO
+        # Try to minimize the losses of each tasks
 
     def _validate_multi_task_data(self, multi_task_data: MultiTaskData):
         for task, data in multi_task_data.items():
@@ -52,3 +59,5 @@ class MultiTaskModel:
     def evaluate(self, task: Task, data: Data) -> np.ndarray:
         self._validate_data(task, data)
         # TODO
+        # Return the loss of given task on given data.
+        # output should be np.array of shape (). (a.k.a scalar)

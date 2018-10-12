@@ -8,6 +8,12 @@ _SCOPE_NAME = "Encoder"
 
 class Encoder:
     def __init__(self, input_dim: int, output_dim: int):
+        # TODO
+        # This object should support additional model config or hyperparameters
+        # with default values.
+
+        # You can develop your own design. (without breaking the interface.)
+
         self.input_dim = input_dim
         self.output_dim = output_dim
         self._set_up()
@@ -32,11 +38,19 @@ class Encoder:
 
     def _build_graph(self):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to map input data to output space.
+
+        # the inputs will be np.array of shape (N, self.input_dim), dtype: np.float32
+        # outputs will be np.array of shape (N, self.output_dim), dtype: np.float32
+
         pass
 
     def encode(self, X: np.ndarray) -> np.ndarray:
         self.validate_data(X)
         # TODO
+        # Return the encoded vector of X,
+        # should be np.array of shape (N, self.output_dim).
 
     def validate_data(self, data: Data):
         x = data[0] if isinstance(data, tuple) else data
@@ -46,11 +60,19 @@ class Encoder:
             raise ValueError(f"Invalid input data dimension: {x.shape[1]} != {self.input_dim}!")
 
     @classmethod
-    def load(cls, path: str):
+    def load(cls, path: str) -> object:
         # TODO
+        # Restore the Encoder object
+        # from given file path which has been passed to save already.
+
+        # Hint: make use of tf.train.Saver
+
         pass
 
     def save(self, path: str):
         # TODO
-        # save hyper parameters as well (if they exist.)
+        # Save the variables and hyperparameters of Encoder to given path.
+
+        # Hint: make use of tf.train.Saver
+
         pass

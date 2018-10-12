@@ -7,13 +7,19 @@ from .types import SupervisedData, UnsupervisedData
 
 class Task(abc.ABC):
     def __init__(self, name: str, output_dim: int):
+        # TODO
+        # This object should support additional model config or hyperparameters
+        # with default values.
+
+        # You can develop your own design. (without breaking the interface.)
+
         self.name = name
         self.output_dim = output_dim
 
-    def build_graph(self, encoder):
+    def extend_encoder_graph(self, encoder):
         graph = encoder.graph
         with graph.as_default(), tf.variable_scope(self.name) as vs:
-            self._build_graph(encoder)
+            self._extend_encoder_graph(encoder)
             encoder.sess.run(
                 tf.variables_initializer(
                     var_list=graph.get_collection(
@@ -24,7 +30,7 @@ class Task(abc.ABC):
             )
 
     @abc.abstractmethod
-    def _build_graph(self, encoder):
+    def _extend_encoder_graph(self, encoder):
         pass
 
     @abc.abstractmethod
@@ -60,8 +66,16 @@ class MultiLabelTask(SupervisedTask):
     def n_labels(self):
         return self.output_dim
 
-    def _build_graph(self, encoder):
+    def _extend_encoder_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to train and predict multi-label data.
+
+        # the labels will be np.array of shape (N, self.n_labels)
+        # and np.int32 value in {0, 1}
+
+        # the prediction should be based on the output of encoder.
+
         pass
 
 
@@ -71,8 +85,16 @@ class MultiClassTask(SupervisedTask):
         super().__init__(name=name, output_dim=1)
         self.n_classes = n_classes
 
-    def _build_graph(self, encoder):
+    def _extend_encoder_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to train and predict multi-class data.
+
+        # the labels will be np.array of shape (N, 1)
+        # and np.int32 value in [0, n_classes)
+
+        # the prediction should be based on the output of encoder.
+
         pass
 
 
@@ -87,6 +109,11 @@ class UnsupervisedTask(Task):
 
 class AutoEncoderTask(UnsupervisedTask):
 
-    def _build_graph(self, encoder):
+    def _extend_encoder_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to reconstruct the original input data.
+
+        # the prediction should be based on the output of encoder.
+
         pass
