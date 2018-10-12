@@ -5,6 +5,7 @@
 ## 目的
 
 實作一個 Encoder ，能利用多種 Tasks 訓練，並支援 Save / Load 功能。
+
 為了簡化，本實作中的 Data 皆為一維 (不考慮batch_size.)
 
 ---
