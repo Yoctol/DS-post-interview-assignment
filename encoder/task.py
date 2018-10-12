@@ -62,6 +62,14 @@ class MultiLabelTask(SupervisedTask):
 
     def _build_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to train and predict multi-label data.
+
+        # the labels will be np.array of shape (N, self.n_labels)
+        # and np.int32 value in {0, 1}
+
+        # the prediction should be based on the output of encoder.
+
         pass
 
 
@@ -73,6 +81,14 @@ class MultiClassTask(SupervisedTask):
 
     def _build_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to train and predict multi-class data.
+
+        # the labels will be np.array of shape (N, 1)
+        # and np.int32 value in [0, n_classes)
+
+        # the prediction should be based on the output of encoder.
+
         pass
 
 
@@ -89,4 +105,9 @@ class AutoEncoderTask(UnsupervisedTask):
 
     def _build_graph(self, encoder):
         # TODO
+        # Build a graph containing necessary operations and tensors
+        # to reconstruct the original input data.
+
+        # the prediction should be based on the output of encoder.
+
         pass

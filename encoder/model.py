@@ -38,6 +38,7 @@ class MultiTaskModel:
         self._validate_multi_task_data(supervised_data)
         self._validate_multi_task_data(unsupervised_data)
         # TODO
+        # Try to minimize the losses of each tasks
 
     def _validate_multi_task_data(self, multi_task_data: MultiTaskData):
         for task, data in multi_task_data.items():
@@ -52,3 +53,5 @@ class MultiTaskModel:
     def evaluate(self, task: Task, data: Data) -> np.ndarray:
         self._validate_data(task, data)
         # TODO
+        # calculate the loss of given task on given data.
+        # output should be np.array of shape ()
