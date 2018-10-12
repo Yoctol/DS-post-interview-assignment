@@ -1,13 +1,18 @@
-import numpy as np
-import tensorflow as tf
+from typing import Dict, Union
 
-from .task import Task
+import numpy as np
+
+from .task import Task, SupervisedTask, UnsupervisedTask
 from .types import (
     Data,
-    MultiSupervisedData,
-    MultiUnsupervisedData,
-    MultiTaskData,
+    SupervisedData,
+    UnsupervisedData,
 )
+
+
+MultiSupervisedData = Dict[SupervisedTask, SupervisedData]
+MultiUnsupervisedData = Dict[UnsupervisedTask, UnsupervisedData]
+MultiTaskData = Union[MultiSupervisedData, MultiUnsupervisedData]
 
 
 class MultiTaskModel:
@@ -15,15 +20,13 @@ class MultiTaskModel:
         self.encoder = encoder
         self._task = set()
         self.graph = encoder.graph
+        self.sess = encoder.sess
 
     def add_task(self, task: Task):
         if task in self._task:
             raise RuntimeError("Task already exists!")
         self._task.add(task)
-        with tf.variable_scope(task.name), self.graph.as_default():
-            # TODO
-            # Please feel free to define the arguments of build_graph
-            task.build_graph()
+        task.build_graph(self.encoder)
 
     def fit(
             self,

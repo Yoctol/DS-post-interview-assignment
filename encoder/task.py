@@ -1,5 +1,7 @@
 import abc
 
+import tensorflow as tf
+
 from .types import SupervisedData, UnsupervisedData
 
 
@@ -8,8 +10,21 @@ class Task(abc.ABC):
         self.name = name
         self.output_dim = output_dim
 
+    def build_graph(self, encoder):
+        graph = encoder.graph
+        with graph.as_default(), tf.variable_scope(self.name) as vs:
+            self._build_graph(encoder)
+            encoder.sess.run(
+                tf.variables_initializer(
+                    var_list=graph.get_collection(
+                        tf.GraphKeys.GLOBAL_VARIABLES,
+                        scope=vs.name,
+                    ),
+                )
+            )
+
     @abc.abstractmethod
-    def build_graph(self):
+    def _build_graph(self, encoder):
         pass
 
     @abc.abstractmethod
@@ -36,13 +51,28 @@ class SupervisedTask(Task):
             raise ValueError(f"Invalid output data dimension: {y.shape[1]} != {self.output_dim}!")
 
 
-class BinaryClsTask(SupervisedTask):
-    def build_graph(self, *args, **kwargs):
+class MultiLabelTask(SupervisedTask):
+
+    def __init__(self, name: str, n_labels: int):
+        super().__init__(name=name, output_dim=n_labels)
+
+    @property
+    def n_labels(self):
+        return self.output_dim
+
+    def _build_graph(self, encoder):
+        # TODO
         pass
 
 
-class MultiClsTask(SupervisedTask):
-    def build_graph(self, *args, **kwargs):
+class MultiClassTask(SupervisedTask):
+
+    def __init__(self, name: str, n_classes: int):
+        super().__init__(name=name, output_dim=1)
+        self.n_classes = n_classes
+
+    def _build_graph(self, encoder):
+        # TODO
         pass
 
 
@@ -56,5 +86,7 @@ class UnsupervisedTask(Task):
 
 
 class AutoEncoderTask(UnsupervisedTask):
-    def build_graph(self, *args, **kwargs):
+
+    def _build_graph(self, encoder):
+        # TODO
         pass
