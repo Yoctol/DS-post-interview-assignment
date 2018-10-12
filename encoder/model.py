@@ -32,7 +32,7 @@ class MultiTaskModel:
         if task in self._task:
             raise RuntimeError("Task already exists!")
         self._task.add(task)
-        task.build_graph(self.encoder)
+        task.extend_encoder_graph(self.encoder)
 
     def fit(
             self,
